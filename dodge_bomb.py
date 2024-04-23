@@ -2,9 +2,10 @@ import os
 import random
 import sys
 import pygame as pg
+import time
 
 
-WIDTH, HEIGHT = 1000, 700
+WIDTH, HEIGHT = 1000, 600
 DELTA = {  # 移動量辞書（押下キー：移動量タプル）
     pg.K_UP: (0, -5),
     pg.K_DOWN: (0, +5),
@@ -25,6 +26,16 @@ def check_bound(obj_rct:pg.Rect) -> tuple[bool, bool]:
     if obj_rct.top < 0 or HEIGHT < obj_rct.bottom:
         tate = False
     return yoko, tate
+def Game_Over():
+    screen = pg.display.set_mode((WIDTH, HEIGHT))
+    rct = pg.Surface((WIDTH,HEIGHT))
+    pg.draw.rect(rct, (0, 0, 0), (0, 0, WIDTH,HEIGHT))
+    rct.set_alpha(150)
+    
+    screen.blit(rct, [0, 0])
+    pg.display.update()
+    print("Game Over ")
+    time.sleep(5)
 
 def main():
     pg.display.set_caption("逃げろ！こうかとん")
@@ -33,6 +44,8 @@ def main():
     kk_img = pg.transform.rotozoom(pg.image.load("fig/3.png"), 0, 2.0)
     kk_rct = kk_img.get_rect()
     kk_rct.center = 900, 400
+    
+    
     # ここから爆弾の設定
     bd_img = pg.Surface((20,20))
     bd_img.set_colorkey((0,0,0))
@@ -48,7 +61,8 @@ def main():
                 return
         
         if kk_rct.colliderect(bd_rct): #こうかとんと爆弾がぶつかったら
-            print("Game Over ")
+            
+            Game_Over()
             return
         screen.blit(bg_img, [0, 0]) 
         # こうかとんの移動と表示
@@ -62,6 +76,8 @@ def main():
         if check_bound(kk_rct) != (True, True):
             kk_rct.move_ip(-sum_mv[0], -sum_mv[1])
         screen.blit(kk_img, kk_rct)
+        #game over
+        
         # 爆弾の移動と表示
         bd_rct.move_ip(vx, vy) 
         screen.blit(bd_img, bd_rct)
