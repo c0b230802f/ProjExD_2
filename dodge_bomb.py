@@ -26,12 +26,15 @@ def check_bound(obj_rct:pg.Rect) -> tuple[bool, bool]:
     if obj_rct.top < 0 or HEIGHT < obj_rct.bottom:
         tate = False
     return yoko, tate
-def Game_Over():
-    screen = pg.display.set_mode((WIDTH, HEIGHT))
+#def Game_Over():
+    global screen
+    fonto = pg.font.Font(None, 80)
+    txt = fonto.render("Game Over",True, (255, 255, 255))
+    
     rct = pg.Surface((WIDTH,HEIGHT))
     pg.draw.rect(rct, (0, 0, 0), (0, 0, WIDTH,HEIGHT))
     rct.set_alpha(150)
-    
+    screen.blit(txt, [300, 200])
     screen.blit(rct, [0, 0])
     pg.display.update()
     print("Game Over ")
@@ -44,7 +47,19 @@ def main():
     kk_img = pg.transform.rotozoom(pg.image.load("fig/3.png"), 0, 2.0)
     kk_rct = kk_img.get_rect()
     kk_rct.center = 900, 400
-    
+    def Game_Over():
+        
+        fonto = pg.font.Font(None, 120)
+        txt = fonto.render("Game Over",True, (255, 255, 255))
+        
+        rct = pg.Surface((WIDTH,HEIGHT))
+        pg.draw.rect(rct, (0, 0, 0), (0, 0, WIDTH,HEIGHT))
+        rct.set_alpha(150)
+        screen.blit(txt, [250, 250])
+        screen.blit(rct, [0, 0])
+        pg.display.update()
+        print("Game Over ")
+        time.sleep(5)
     
     # ここから爆弾の設定
     bd_img = pg.Surface((20,20))
