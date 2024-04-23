@@ -2,7 +2,7 @@ import os
 import sys
 import pygame as pg
 
-
+"""aaaa"""
 WIDTH, HEIGHT = 1600, 900
 os.chdir(os.path.dirname(os.path.abspath(__file__)))
 
